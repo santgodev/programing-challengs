@@ -1,0 +1,97 @@
+type Inventory = Array<
+  { name: string, quantity: number, category: string }
+>
+
+interface NameQuantity {
+  name: string;
+  quantity: number;
+}
+
+
+const inventory = [
+  { name: 'doll', quantity: 5, category: 'toys' },
+  { name: 'car', quantity: 3, category: 'toys' },
+  { name: 'ball', quantity: 2, category: 'sports' },
+  { name: 'car', quantity: 2, category: 'toys' },
+  { name: 'racket', quantity: 4, category: 'sports' }
+]
+
+const inventory2 = [
+  { name: 'book', quantity: 10, category: 'education' },
+  { name: 'book', quantity: 5, category: 'education' },
+  { name: 'paint', quantity: 3, category: 'art' }
+]
+
+
+function organizeInventory(inventory: Inventory) {
+  
+
+const categoriesNotRepeated: string[] = [
+  ...new Set(inventory.map(item => item.category))
+];
+
+
+
+function filterInventoryByCategorie(category:string){
+  return inventory.filter((inventory)=>inventory.category==category)
+}
+
+
+  function ConvertInventoryToNameQuantity(inventory: Inventory) {
+    const result: Record<string, number> = {};
+    inventory.forEach(item => {
+      result[item.name] = item.quantity;
+    });
+    return result;
+  }
+ 
+
+function getInventoryNotRepeted (inventory:Inventory):Inventory{
+const arrayNamesQuantityNotRepeted : Inventory = [];
+inventory.forEach((item, i)=>{
+  if(i===0){arrayNamesQuantityNotRepeted.push(item); return;}
+  for (let index = 0; index < arrayNamesQuantityNotRepeted.length; index++) {
+    if( item.name == arrayNamesQuantityNotRepeted[index].name ){
+      arrayNamesQuantityNotRepeted[index].quantity+=item.quantity
+      break;
+    }
+    if(arrayNamesQuantityNotRepeted.length == index+1){
+      arrayNamesQuantityNotRepeted.push(item);
+      break;
+    }
+  } 
+})
+return arrayNamesQuantityNotRepeted;
+}
+
+
+function nameAndQuantityByCategorie(){
+  let objReadyToPrint:any = {}
+  categoriesNotRepeated.forEach((category, i)=>{
+    let objFiltred: Inventory = filterInventoryByCategorie(category);
+    let inventoryNotRepeted : Inventory = getInventoryNotRepeted(objFiltred)
+    let intoryNameQuantityNotRepeted  = ConvertInventoryToNameQuantity(inventoryNotRepeted);
+        objReadyToPrint[category]=intoryNameQuantityNotRepeted;
+  })
+  return objReadyToPrint;
+}
+
+let nameAndQuantity = nameAndQuantityByCategorie();
+console.log(nameAndQuantity)
+
+
+
+let obj : any= {};
+let category = "art";
+let item1 = { paint: 3 };
+let item2 = { brush: 2 };
+
+obj[category]={}
+obj[category]["item1"]=2
+obj[category]["item2"]=6
+//console.log(obj)
+
+}
+
+organizeInventory(inventory)
+organizeInventory(inventory2)
