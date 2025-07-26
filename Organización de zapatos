@@ -1,0 +1,21 @@
+type Shoe = {
+  type: 'I' | 'R'
+  size: number
+}
+function organizeShoes(shoes: Shoe[]): number[] {
+  let shoesCopy = [...shoes]; 
+  let desorganizeShoes:number[] = []  
+    for(let i:number=0;i<shoesCopy.length;i++ ){
+            if(shoesCopy.length<2){break;}
+            for(let d:number=0;d<shoes.length;d++ ){
+                if(shoesCopy[i].size == shoesCopy[d].size && shoesCopy[i].type != shoesCopy[d].type){
+                    desorganizeShoes.push(shoesCopy[i].size);
+                    shoesCopy.splice(i, 1);
+                    shoesCopy.splice(d-1, 1);
+                    i--
+                    break;
+                }
+            }
+    }
+  return desorganizeShoes;
+}
