@@ -1,22 +1,19 @@
 const instructions = [
-  'MOV -1 C', // copia -1 al registro 'C',
-  'INC C', // incrementa el valor del registro 'C'
-  'JMP C 1', // salta a la instrucción en el índice 1 si 'C' es 0
-  'MOV C A', // copia el registro 'C' al registro 'a',
-  'INC A' // incrementa el valor del registro 'a'
-  
-
+"MOV 5 B",
+  "DEC B",
+  "MOV B A",
+  "INC A"
 ]
 
 // crear la variable "x" y "y", y dejarlas por defecto en 0, a no ser que se les de otro valor
 // hacer un for de instruccines
 // hacer un swich con las instrucciones
 // 
-function compile (instructions: string[]): number {
+function compile (instructions: string[]): number | undefined {
 
 
 let obj:any = {}
-
+let a;
 for(let i : number = 0; i<instructions.length; i++){
   let row = instructions[i];
   let instruccionsRowValue =row.slice(0, 3)
@@ -47,30 +44,40 @@ function esNumero(num:string) {
     case "MOV":
     if(esNumero(x)){
       obj[y]=Number(x)
+      break;
     }
-    else{
-      obj[y]=obj[x]
-    }
+    if (obj[x] == null) obj[x] = 0; 
+          obj[y] = obj[x];
     console.log(x, y)
     break;
     case "INC":
+    if (obj[x]==null){
+      obj[x]=0;
+    }
     obj[x] += 1
     break;
     case "DEC":
+     if (obj[x]==null){
+      obj[x]=0;
+    }
     obj[x] -= 1
     break;
     case "JMP":
+    if (obj[x] == null) obj[x] = 0;
     if(obj[x] == 0){
-      i=Number(y)
+      i=Number(y) - 1
     }
 
 
     break;
   }console.log("objeto igual a:",obj)
 
+  if(i+1 == instructions.length){
+    a = obj['A'] 
+  }
   }
 
 
-  return 0
+  return a
 }
 compile(instructions)
