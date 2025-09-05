@@ -13,7 +13,7 @@ definir los modificadores
 ?: El siguiente movimiento se hace sólo si no se ha hecho antes (ej: R?R significa R)
 */
 
-let str: string = "LLLR!LLL";
+let str: string = "LLLR!LLUU?UDUL";
 
 function isRobotBack(moves: string): true | [number, number] {
   type Coord = [number, number];
@@ -37,6 +37,19 @@ function isRobotBack(moves: string): true | [number, number] {
       board.push([x + 1, y]);
     }
     if (moves[i] == "*") {
+      if (moves[i+1] == "L") {
+        board.push([x, y + 2]);
+      }
+      if (moves[i+1] == "R") {
+        board.push([x, y - 2]);
+      }
+      if (moves[i+1] == "U") {
+        board.push([x + 2, y]);
+      }
+      if (moves[i+1] == "D") {
+        board.push([x - 2, y]);
+      }
+      i+1;
     }
     if (moves[i] == "!") {
       if (moves[i+1] == "L") {
@@ -54,10 +67,36 @@ function isRobotBack(moves: string): true | [number, number] {
       i+1;
     }
     if (moves[i] == "?") {
-    }
-    i++;
-        console.log("x = ", x, "y = ", y);
+      let isPresent : boolean = false;
+      for(let g:number = 0; g<i;g++){
+       if( moves[g]==moves[i+1]){
+        console.log("finalmente se cumplio");
+        board.push([x, y]);
+        isPresent = true;
+        i++;
+        break;
+       }
 
+       if(!isPresent){
+              if (moves[i+1] == "L") {
+        board.push([x, y + 1]);
+      }
+      if (moves[i+1] == "R") {
+        board.push([x, y - 1]);
+      }
+      if (moves[i+1] == "U") {
+        board.push([x + 1, y]);
+      }
+      if (moves[i+1] == "D") {
+        board.push([x - 1, y]);
+      }
+      i++;
+       }
+      }
+
+    }
+      i++;
+        console.log("x = ", x, "y = ", y, "i =", i);
   }
   
   return true;
