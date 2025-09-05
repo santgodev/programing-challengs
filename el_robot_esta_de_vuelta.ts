@@ -13,7 +13,7 @@ definir los modificadores
 ?: El siguiente movimiento se hace sólo si no se ha hecho antes (ej: R?R significa R)
 */
 
-let str: string = "LLLR!LLUU?UDUL";
+let str: string = "LLLU?L";
 
 function isRobotBack(moves: string): true | [number, number] {
   type Coord = [number, number];
@@ -67,6 +67,7 @@ function isRobotBack(moves: string): true | [number, number] {
       i+1;
     }
     if (moves[i] == "?") {
+        console.log("este es x y y ",x, y)
       let isPresent : boolean = false;
       for(let g:number = 0; g<i;g++){
        if( moves[g]==moves[i+1]){
@@ -77,18 +78,19 @@ function isRobotBack(moves: string): true | [number, number] {
         break;
        }
 
-       if(!isPresent){
-              if (moves[i+1] == "L") {
-        board.push([x, y + 1]);
-      }
-      if (moves[i+1] == "R") {
+      if(isPresent){
+        console.log("hola mundo cruel")
+      if (moves[i+1] == "L") {
         board.push([x, y - 1]);
       }
+      if (moves[i+1] == "R") {
+        board.push([x, y + 1]);
+      }
       if (moves[i+1] == "U") {
-        board.push([x + 1, y]);
+        board.push([x - 1, y]);
       }
       if (moves[i+1] == "D") {
-        board.push([x - 1, y]);
+        board.push([x + 1, y]);
       }
       i++;
        }
@@ -96,7 +98,7 @@ function isRobotBack(moves: string): true | [number, number] {
 
     }
       i++;
-        console.log("x = ", x, "y = ", y, "i =", i);
+        console.log(board[i-1]);
   }
   
   return true;
