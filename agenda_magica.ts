@@ -1,8 +1,3 @@
-
-
-// 1. Separar numeros desde el +, hasta el espacio
-// 2. Encontrar los numeros entre < >
-
 function findInAgenda(agenda: string, phone: string): { name: string; address: string } | null {
             let row = agenda.split("\n")
             let agentLibrary : any= [];
@@ -40,41 +35,42 @@ function findInAgenda(agenda: string, phone: string): { name: string; address: s
         let address : string = "";
         let count : number = 0;
         while(count<agentLibrary.length){
-       for(let i:number = 0; i<phone.length; i++){
-          if(agentLibrary[count].phoneNumber[i]!=phone[i] ){
-            break;
-          }
-          if(i==phone.length-1){
-            name=agentLibrary[count].fullName
-            address=agentLibrary[count].adddress
-            quantityInAgent++;
+        let indexOfPhone = agentLibrary[count].phoneNumber.indexOf(phone[0])
+        let phoneCountSliced = agentLibrary[count].phoneNumber.slice(indexOfPhone)
+          console.log(phone)
+          console.log(phoneCountSliced)
+          console.log(indexOfPhone)
+
+        if(indexOfPhone != null){
+          
+          for(let i:number = 0; i<phone.length; i++){
+         
+            if(phoneCountSliced[i]!=phone[i] ){
+              break;
+            }
+            if(i==phone.length-1){
+              name=agentLibrary[count].fullName
+              address=agentLibrary[count].adddress
+              quantityInAgent++;
+              console.log("cumplido")
+
+            }
 
           }
-
         }
-        if(quantityInAgent>1){
+        count++;
+      }
+        if(quantityInAgent == 1 && name && address){
+          console.log("hola")
+          return {name, address};
+        }
+        else{
           return null;
         }
-        if(name && address && count==agentLibrary.length-1){
-          return {name, address}
-        }
-                  count++;
-                 
-
-      }
-              return null;
+            
 
   }
         let dataFinded = findInAgendaFuntion();
   return dataFinded ? dataFinded : null;
 
 }
-let str = `+34-600-123-456 Calle Gran Via 12 <Juan Perez>
- Plaza Mayor 45 Madrid 28013 <Maria Gomez> +34-600-987-654
- <Carlos Ruiz> +1-800-555-0199 Fifth Ave New York`;
-
-console.log(
-
-  findInAgenda(str, "600-987")
-)
-
