@@ -66,8 +66,7 @@ function fixGiftList(received: string[], expected: string[]): { missing: Record<
   }  
 
     for(let i : number = 0; i< receivedSet.length; i++){
-        let countMissing : number =0; 
-        let countExtra : number =0; 
+       
         let receivedInSet : string = receivedSet[i]
         if(!objExpected[receivedInSet]){
           objExtra[receivedInSet]=objReceived[receivedInSet]
@@ -75,31 +74,39 @@ function fixGiftList(received: string[], expected: string[]): { missing: Record<
         }
         if(objExpected[receivedInSet]<objReceived[receivedInSet]){
           let quantityMore : number =  objReceived[receivedInSet] - objExpected[receivedInSet] 
-          console.log(quantityMore)
           objExtra[receivedInSet]=quantityMore;
           continue;
         }
 
-      if(objReceived[receivedInSet] < objExpected[receivedInSet]){
-
-      }
-
   } 
 
-  
-      console.log("received", objReceived)
-      console.log("expected",objExpected)
-      console.log("extra",objExtra)
+    for(let i : number = 0; i< expectedSet.length; i++){
+       
+        let expectedInSet : string = expectedSet[i]
+        if(!objReceived[expectedInSet]){
+          objMissing[expectedInSet]=objExpected[expectedInSet]
+          continue;
+        }
+        if(objReceived[expectedInSet]<objExpected[expectedInSet]){
+          let quantityMore : number =  objExpected[expectedInSet] - objReceived[expectedInSet] 
+          objMissing[expectedInSet]=quantityMore;
+          continue;
+        }
 
 
+  } 
   
-  return {
-    missing: {},
-    extra: {}
-  }
+    
+
+  
+return {
+  missing: objMissing,
+  extra: objExtra
 }
-  
-fixGiftList(
-  ['bear', 'bear','bear', 'car', 'noche'],
-  ['bear', 'car', 'puzzle', 'bear', 'car', 'car']
+}
+  console.log(
+    fixGiftList(
+  ['bear', 'bear','bear', 'car','car','car','car', 'noche'],
+  ['bear', 'car', 'puzzle','puzzle', 'bear', 'car', 'car', 'car', 'car']
 )
+  )
